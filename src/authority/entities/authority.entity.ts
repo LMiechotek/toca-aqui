@@ -1,5 +1,5 @@
 import { Person } from "src/person/entities/person.entity";
-import { Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, Column } from "typeorm";
 
 @Entity()
 export class Authority {
@@ -9,4 +9,9 @@ export class Authority {
     //@ManyToOne(() => Person, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
     //@JoinColumn({})
 
+    @Column({ type: "timestamp with time zone", default: () => "now()" })
+    valid_from: Date;
+
+    @Column({ type: "timestamp with time zone" })
+    valid_to: Date;
 }
