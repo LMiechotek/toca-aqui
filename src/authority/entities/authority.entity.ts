@@ -4,8 +4,13 @@ import { Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, Column } from "t
 @Entity()
 export class Authority {
     @PrimaryGeneratedColumn()
-    id: bigint;
+    id: number;
 
+    @Column()
+    permission: permission;
+
+    @Column()
+    person_id : number;
     //@ManyToOne(() => Person, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
     //@JoinColumn({})
 

@@ -4,6 +4,8 @@ import { UpdatePersonDto } from './dto/update-person.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Person } from './entities/person.entity';
 import { Repository } from 'typeorm';
+import { Authority } from 'src/authority/entities/authority.entity';
+import { Permission } from 'src/common/enums/permission.enum';
 
 @Injectable()
 export class PersonService {
@@ -42,6 +44,26 @@ export class PersonService {
 
     return persons
   }
+
+  async findAllProfessors(){
+    const professors = await this.personRepository.createQueryBuilder('Person')
+    .innerJoinAndSelect(Authority, 'authority', 'person.id = authority.person_id')
+    .where(`authority.permission = ${Permission.TEACHER}`) 
+    .getMany()
+
+    return professors
+  }
+
+  async findOneProfessor(id: number) : Promise<JSON> {
+    const professor = await this.personRepository.createQueryBuilder('Person')
+    .innerJoinAndSelect(Authority, 'authority', 'person.id = authority.person_id')
+    .where(`authority.permission = ${Permission.TEACHER}`)
+    .andWhere(`person.id = ${id}`)
+    .getOne()
+
+    return professor
+  }
+
 
   async findOne(id: bigint) {
     const person = await this.personRepository.findOneBy({
