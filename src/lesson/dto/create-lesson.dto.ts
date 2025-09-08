@@ -1,18 +1,23 @@
-import { IsEmail, IsNotEmpty, IsString, IsTimeZone, MaxLength, MinLength } from "class-validator";
+import { IsEmail, isNotEmpty, IsNotEmpty, IsNumber, IsString, isTimeZone, IsTimeZone, MaxLength, MinLength } from "class-validator";
 
 export class CreateLessonDto {
     @IsNotEmpty()
     price: number;
 
+    @IsNotEmpty()
     scheduled: TimeRanges;
 
-    @IsFil
+    @IsFile()
     galleyPictures: File;
 
+    @IsNumber()
+    previous_id: Number;
 
-    @IsString()
-    @MaxLength(11)
-    cpf: string;
+    @IsNumber()
+    author_id: Number;
 
+    valid_from: TimeRanges;
+
+    valid_to: TimeRanges;
     
 }
