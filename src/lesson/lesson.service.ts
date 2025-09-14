@@ -1,9 +1,10 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Lesson } from './entities/lesson.entity';
 import { Repository } from 'typeorm';
 import { CreateLessonDto } from './dto/create-lesson.dto';
 import { Person } from 'src/person/entities/person.entity';
+import { UpdateLessonDto } from './dto/update-lesson.dto';
 
 @Injectable()
 export class LessonService {
@@ -27,7 +28,7 @@ export class LessonService {
       return newLesson;
     } catch (error) {
       if (error === '23505') {
-        throw new ConflictException('Email is already in use.');
+        throw new ConflictException('Already in use');
       }
 
       throw error;
@@ -54,7 +55,7 @@ export class LessonService {
     return students
   }
 
-  async findOneProfessor(id: number) : Promise<JSON> {
+  async findOneStudent(id: number) : Promise<Lesson | null> {
     const student = await this.lessonRepository.createQueryBuilder('Lesson')
     .innerJoinAndSelect(Person, 'person', 'Lesson.student_id = person_id')
     .where(`person.id = Lesson.student_id`) 
@@ -71,28 +72,28 @@ export class LessonService {
 
     });
 
-    if(!person) {
-      throw new NotFoundException('Person not found.');
+    if(!lesson) {
+      throw new NotFoundException('Lesson not found.');
     }
 
-    return person;
+    return lesson;
   }
 
-  async update(id: bigint, updatePersonDto: UpdatePersonDto) {
-    const personData = {
+  async update(id: number, updatePersonDto: UpdateLessonDto) {
+    const lessonData = {
 
     }
   }
 
-  async remove(id: bigint) {
-    const person = await this.lessonRepository.findOneBy({
-      id,
+  async remove(id: number) {
+    const lesson = await this.lessonRepository.findOneBy({
+      course_id,
     });
 
-    if (!person) {
-      throw new NotFoundException('Person not found.');
+    if (!lesson) {
+      throw new NotFoundException('Lesson not found.');
     }
 
-    return this.lessonRepository.remove(person);
+    return this.lessonRepository.remove(lesson);
   }
 }

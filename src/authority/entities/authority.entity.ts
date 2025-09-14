@@ -1,3 +1,4 @@
+import { Permission } from "src/common/enums/permission.enum";
 import { Person } from "src/person/entities/person.entity";
 import { Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, Column } from "typeorm";
 
@@ -7,7 +8,7 @@ export class Authority {
     id: number;
 
     @Column()
-    permission: permission;
+    permission: Permission;
 
     @Column()
     person_id : number;

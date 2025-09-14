@@ -4,7 +4,7 @@ import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 @Entity()
 export class Person {
     @PrimaryGeneratedColumn()
-    id: bigint;
+    id: number;
 
     @Column({ type: "varying character", nullable: false })
     name: string;

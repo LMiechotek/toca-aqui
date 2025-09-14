@@ -54,7 +54,7 @@ export class PersonService {
     return professors
   }
 
-  async findOneProfessor(id: number) : Promise<JSON> {
+  async findOneProfessor(id: number) : Promise<Person | null> {
     const professor = await this.personRepository.createQueryBuilder('Person')
     .innerJoinAndSelect(Authority, 'authority', 'person.id = authority.person_id')
     .where(`authority.permission = ${Permission.TEACHER}`)
@@ -65,7 +65,7 @@ export class PersonService {
   }
 
 
-  async findOne(id: bigint) {
+  async findOne(id: number) {
     const person = await this.personRepository.findOneBy({
       id,
     });
@@ -77,13 +77,13 @@ export class PersonService {
     return person;
   }
 
-  async update(id: bigint, updatePersonDto: UpdatePersonDto) {
+  async update(id: number, updatePersonDto: UpdatePersonDto) {
     const personData = {
 
     }
   }
 
-  async remove(id: bigint) {
+  async remove(id: number) {
     const person = await this.personRepository.findOneBy({
       id,
     });
