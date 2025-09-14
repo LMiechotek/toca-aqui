@@ -3,7 +3,7 @@ import { CourseService } from './course.service';
 import { CreateCourseDto } from './dto/create-course.dto';
 import { UpdateCourseDto } from './dto/update-course.dto';
 
-@Controller('person')
+@Controller('course')
 export class CourseController {
   constructor(private readonly courseService: CourseService) {}
 
@@ -18,17 +18,17 @@ export class CourseController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id') id: number) {
     return this.courseService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePersonDto: UpdateCourseDto) {
+  update(@Param('id') id: number, @Body() updatePersonDto: UpdateCourseDto) {
     return this.courseService.update(+id, updatePersonDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(@Param('id') id: number) {
     return this.courseService.remove(+id);
   }
 }

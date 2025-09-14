@@ -1,6 +1,7 @@
 import { IsEmail, IsNotEmpty, IsNumber, isString, IsString, MaxLength, MinLength } from "class-validator";
+import { Lesson } from "src/lesson/entities/lesson.entity";
 import { Person } from "src/person/entities/person.entity";
-import { JoinColumn, ManyToOne } from "typeorm";
+import { JoinColumn, ManyToOne, OneToMany } from "typeorm";
 
 export class CreateCourseDto {
     @ManyToOne(() => Person, (person) => person.id)
@@ -23,5 +24,7 @@ export class CreateCourseDto {
     @IsString()
     gallery_pictures: File;
 
+    @OneToMany(() => Lesson, (lesson) => lesson.course_id)
+    lessons: Lesson[];
     
 }
