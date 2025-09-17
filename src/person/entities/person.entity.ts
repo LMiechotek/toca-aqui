@@ -1,36 +1,32 @@
-import { IsEmail } from "class-validator";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToOne, OneToMany } from 'typeorm';
+import { Credential } from '../../credential/entities/credential.entity';
+import { UserSession } from '../../user-session/entities/user-session.entity';
+import { Authority } from '../../authority/entities/authority.entity';
 
-@Entity()
+@Entity('person')
 export class Person {
-    @PrimaryGeneratedColumn()
-    id: bigint;
+  @PrimaryGeneratedColumn('increment', { type: 'bigint' })
+  id: number;
 
-    @Column({ type: "varying character", nullable: false })
-    name: string;
+  @Column({ length: 255 })
+  name: string;
 
-    @Column({ type: "varying character", nullable: false, unique: true })
-    @IsEmail()
-    email: string;
+  @Column({ length: 255, unique: true })
+  email: string;
 
-    @Column({ type: "varying character", length: 13})
-    mobile_number: string;
+  @Column({ length: 13, nullable: true })
+  mobile_number?: string;
 
-    @Column({ type: "varying character", length:11})
-    cpf: string;
+  @Column({ length: 11, nullable: true })
+  cpf?: string;
 
-    @Column()
-    profile_picture:string;
+  // relações
+  @OneToOne(() => Credential, (cred) => cred.person, { cascade: true })
+  credential: Credential;
 
-    @Column()
-    previous_id: bigint;
+  @OneToMany(() => UserSession, (session) => session.person)
+  sessions: UserSession[];
 
-    @Column()
-    author_id: bigint;
-
-    @Column({ type: "timestamp with time zone", default:() => "now()"})
-    valid_from: Date;
-
-    @Column({ type: "timestamp with time zone"})
-    valid_to: Date;
+  @OneToMany(() => Authority, (auth) => auth.person)
+  authorities: Authority[];
 }
