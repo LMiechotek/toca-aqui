@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Authority } from 'src/authority/entities/authority.entity';
 import { Permission } from 'src/common/enums/permission.enum';
+import { CreateCredentialDto } from './dto/create-credential.dto';
 
 @Injectable()
 export class credentialService {
@@ -11,13 +12,13 @@ export class credentialService {
     private readonly credentialRepository: Repository<Credential>,
   ) { }
 
-  async create(createPersonDto: CreatePersonDto) {
+  async create(createCredentialDto: CreateCredentialDto) {
     try {
       const personData = {
-        name: createPersonDto.name,
-        email: createPersonDto.email,
-        mobile_number: createPersonDto.mobile_number,
-        cpf: createPersonDto.cpf,
+        name: createCredentialDto.,
+        email: createCredentialDto.email,
+        mobile_number: createCredentialDto.mobile_number,
+        cpf: createCredentialDto.cpf,
       };
 
       const newPerson = this.credentialRepository.create(personData);

@@ -6,6 +6,7 @@ import { Person } from './entities/person.entity';
 import { Repository } from 'typeorm';
 import { Authority } from 'src/authority/entities/authority.entity';
 import { Permission } from 'src/common/enums/permission.enum';
+import { Lesson } from 'src/lesson/entities/lesson.entity';
 
 @Injectable()
 export class PersonService {
@@ -45,19 +46,24 @@ export class PersonService {
     return persons
   }
 
-  async findAllProfessors(){
+  async findAllTeachers(){
+   
     const professors = await this.personRepository.createQueryBuilder('Person')
-    .innerJoinAndSelect(Authority, 'authority', 'person.id = authority.person_id')
-    .where(`authority.permission = ${Permission.TEACHER}`) 
-    .getMany()
+    .innerJoin(Authority, 'authority', 'person.id = authority.person_id')
+    .where(`authority.permission = ${Permission.TEACHER}`)
+    .innerJoinAndSelect(Lesson, 'lesson', 'person.id = lesson.student_id')
+    .where('lesson.student_id = person.id')
+    .getMany() 
 
     return professors
   }
 
   async findOneProfessor(id: number) : Promise<Person | null> {
     const professor = await this.personRepository.createQueryBuilder('Person')
-    .innerJoinAndSelect(Authority, 'authority', 'person.id = authority.person_id')
+    .innerJoin(Authority, 'authority', 'person.id = authority.person_id')
     .where(`authority.permission = ${Permission.TEACHER}`)
+    .innerJoinAndSelect(Lesson, 'lesson', 'person.id = lesson.student_id')
+    .where('lesson.student_id = person.id')
     .andWhere(`person.id = ${id}`)
     .getOne()
 

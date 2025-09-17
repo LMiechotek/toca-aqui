@@ -8,7 +8,6 @@ export class CreateCredentialDto {
     @JoinColumn({name: 'person_id'})
     person: Person;
 
-
     @IsNotEmpty()
     price: number;
 
