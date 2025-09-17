@@ -1,6 +1,7 @@
-import { IsEmail, isNotEmpty, IsNotEmpty, IsNumber, IsString, isTimeZone, IsTimeZone, MaxLength, MinLength } from "class-validator";
+import { IsDate, IsEmail, isNotEmpty, IsNotEmpty, IsNumber, IsString, isTimeZone, IsTimeZone, MaxLength, MinLength } from "class-validator";
 import { Course } from "src/course/entities/course.entity";
 import { JoinColumn, ManyToOne } from "typeorm";
+import { Timestamp } from "typeorm/browser";
 
 export class CreateLessonDto {
     @ManyToOne(() => Course, (course) => course.id)
@@ -12,7 +13,7 @@ export class CreateLessonDto {
     price: number;
 
     @IsNotEmpty()
-    scheduled: TimeRanges;
+    scheduled: Date;
 
     @IsString()
     galleyPictures: File;
@@ -23,8 +24,10 @@ export class CreateLessonDto {
     @IsNumber()
     author_id: Number;
 
-    valid_from: TimeRanges;
+    @IsDate()
+    valid_from: Date;
 
-    valid_to: TimeRanges;
+    @IsDate()
+    valid_to: Date;
     
 }

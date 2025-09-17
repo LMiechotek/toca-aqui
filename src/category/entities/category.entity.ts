@@ -10,8 +10,8 @@ import { Column, Entity, PrimaryColumn } from "typeorm";
     @Column()
     name: String
 
-    @Column()
-    description: Text
+    @Column({type: "text"})
+    description: string
 
     @Column()
     logo_picture: File

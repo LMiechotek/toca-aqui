@@ -14,8 +14,8 @@ export class Lesson {
     @Column()
     price: Number;
 
-    @Column()
-    scheduled: TimeRanges;
+    @Column({type: "timestamptz"})
+    scheduled: Date;
 
     @Column()
     galery_pictures: File;
@@ -26,9 +26,9 @@ export class Lesson {
     @Column()
     author_id: Number;
 
-    @Column()
-    valid_from: TimeRanges;
+    @Column({type: "timestamptz"})
+    valid_from: Date;
 
-    @Column()
-    valid_to: TimeRanges;
+    @Column({type: "timestamptz"})
+    valid_to: Date;
 }

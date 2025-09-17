@@ -1,3 +1,4 @@
+import { text } from "stream/consumers";
 import { Column, Entity, PrimaryColumn } from "typeorm";
 
 @Entity()
@@ -8,17 +9,17 @@ export class Course{
     @Column()
     teacher_id: number;
 
-    @Column()
-    description: Text;
+    @Column({type: "text"})
+    description: string;
 
     @Column()
     lesson_price: number;
 
-    @Column()
-    thumbnail_picture: File
+    @Column({type: "bytea"})
+    thumbnail_picture: Buffer
 
-    @Column()
-    gallery_picture: File
+    @Column({type: "bytea"})
+    gallery_picture: Buffer
 
 }
 

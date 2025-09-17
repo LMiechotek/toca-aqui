@@ -23,10 +23,10 @@ export class Person {
     profile_picture:string;
 
     @Column()
-    previous_id: bigint;
+    previous_id: number;
 
     @Column()
-    author_id: bigint;
+    author_id: number;
 
     @Column({ type: "timestamp with time zone", default:() => "now()"})
     valid_from: Date;
