@@ -1,7 +1,8 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, UnauthorizedException, ConflictException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { LoginDto } from './dto/login.dto';
+import { RegisterDto } from './dto/register.dto'; // <-- precisa criar este DTO
 import { PersonService } from '../person/person.service';
 import { UserSessionService } from '../user-sesion/user-session.service';
 import { Authority } from '../authority/entities/authority.entity';
@@ -22,7 +23,7 @@ export class AuthorityService {
     private readonly credRepo: Repository<Credential>,
     @InjectRepository(Authority)
     private readonly authRepo: Repository<Authority>,
-  ) {}
+  ) { }
 
   async validateUser(email: string, pass: string) {
     const person = await this.personService.findByEmail(email);
@@ -46,13 +47,14 @@ export class AuthorityService {
     const accessToken = this.jwtService.sign(payload);
     const refreshToken = this.jwtService.sign(payload, { expiresIn: '7d' });
 
-    // salvar sessão
+    // corrigido: relacionar diretamente o Person
     await this.userSessionService.create({
-      personId: person.id,
-      accessToken,
-      refreshToken,
-      loginDate: new Date(),
+      person: person,
+      access_token: accessToken,
+      refresh_token: refreshToken,
+      login_date: new Date(),
     });
+
 
     return {
       accessToken,
@@ -64,7 +66,7 @@ export class AuthorityService {
       },
     };
   }
-}
+
   async register(registerDto: RegisterDto) {
     const existing = await this.personService.findByEmail(registerDto.email);
     if (existing) {
@@ -82,7 +84,7 @@ export class AuthorityService {
 
     // Criar Credential
     const credential = this.credRepo.create({
-      person,
+      person, // relacionamento OneToOne
       password: hashedPassword,
     });
     await this.credRepo.save(credential);
@@ -105,3 +107,4 @@ export class AuthorityService {
       },
     };
   }
+}

@@ -8,11 +8,11 @@ export class RegisterDto {
   @IsEmail()
   email: string;
 
-  @IsString()
+  @IsNotEmpty()
   @MinLength(6)
   password: string;
 
   @IsOptional()
   @IsString()
-  permission?: string; // ex: "teacher" ou "admin"
+  permission?: string;
 }
