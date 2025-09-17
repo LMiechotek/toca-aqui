@@ -1,2 +1,4 @@
+import { Module } from '@nestjs/common';
 
-import { CategoryService } from './category.service';
+@Module({})
+export class CategoryModule {}

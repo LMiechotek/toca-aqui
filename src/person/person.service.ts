@@ -51,8 +51,6 @@ export class PersonService {
     const professors = await this.personRepository.createQueryBuilder('Person')
     .innerJoin(Authority, 'authority', 'person.id = authority.person_id')
     .where(`authority.permission = ${Permission.TEACHER}`)
-    .innerJoinAndSelect(Lesson, 'lesson', 'person.id = lesson.student_id')
-    .where('lesson.student_id = person.id')
     .getMany() 
 
     return professors
@@ -62,8 +60,6 @@ export class PersonService {
     const professor = await this.personRepository.createQueryBuilder('Person')
     .innerJoin(Authority, 'authority', 'person.id = authority.person_id')
     .where(`authority.permission = ${Permission.TEACHER}`)
-    .innerJoinAndSelect(Lesson, 'lesson', 'person.id = lesson.student_id')
-    .where('lesson.student_id = person.id')
     .andWhere(`person.id = ${id}`)
     .getOne()
 

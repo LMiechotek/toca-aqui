@@ -68,7 +68,7 @@ export class LessonService {
 
   async findOne(id: number) {
     const lesson = await this.lessonRepository.findOneBy({
-      course_id,
+      id,
 
     });
 
@@ -87,7 +87,7 @@ export class LessonService {
 
   async remove(id: number) {
     const lesson = await this.lessonRepository.findOneBy({
-      course_id,
+      id,
     });
 
     if (!lesson) {

@@ -3,7 +3,7 @@ import { Course } from "src/course/entities/course.entity";
 import { JoinColumn, ManyToOne } from "typeorm";
 
 export class CreateLessonDto {
-    @ManyToOne(() => Course, (course) => course.course_id)
+    @ManyToOne(() => Course, (course) => course.id)
     @JoinColumn({name: 'course_id'})
     course: Course;
 
