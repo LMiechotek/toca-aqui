@@ -1,10 +1,15 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn } from 'typeorm';
+import { Person } from '../../person/entities/person.entity';
 
 @Entity()
 export class Credential {
-    @PrimaryGeneratedColumn()
-    id: bigint;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column({ type: "varchar"})
-    password: string;
+  @Column()
+  password: string;
+
+  @OneToOne(() => Person, (person) => person.credential, { onDelete: 'CASCADE' })
+  @JoinColumn()
+  person: Person;
 }

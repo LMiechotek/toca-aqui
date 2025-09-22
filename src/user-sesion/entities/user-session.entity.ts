@@ -1,27 +1,24 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { Person } from '../../person/entities/person.entity';
 
-@Entity('user_session')
+@Entity()
 export class UserSession {
-  @PrimaryGeneratedColumn('increment', { type: 'bigint' })
+  @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Person, (person) => person.sessions)
-  @JoinColumn({ name: 'person_id' })
+  @ManyToOne(() => Person, (person) => person.sessions, { onDelete: 'CASCADE' })
+  @JoinColumn()
   person: Person;
 
-  @Column({ type: 'varchar', nullable: true })
-  ip_address?: string;
+  @Column()
+  access_token: string;
 
-  @Column({ type: 'varchar', nullable: true })
-  access_token?: string;
+  @Column()
+  refresh_token: string;
 
-  @Column({ type: 'varchar', nullable: true })
-  refresh_token?: string;
-
-  @Column({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
+  @Column({ type: 'timestamp' })
   login_date: Date;
 
-  @Column({ type: 'timestamptz', nullable: true })
-  logout_date?: Date;
+  @Column({ type: 'timestamp', nullable: true })
+  logout_date: Date | null;   
 }
