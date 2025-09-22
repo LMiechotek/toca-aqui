@@ -13,16 +13,16 @@ export class CreateCourseDto {
     name: string;
 
     @IsString()
-    description : Text;
+    description : string;
 
     @IsNumber()
     lesson_price: Number;
 
     @IsString()
-    thumbnail_picture: File;
+    thumbnail_picture: Buffer;
 
     @IsString()
-    gallery_pictures: File;
+    galery_pictures: Buffer;
 
     @OneToMany(() => Lesson, (lesson) => lesson.course_id)
     lessons: Lesson[];

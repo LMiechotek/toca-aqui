@@ -10,7 +10,7 @@ export class Course{
     teacher_id: number;
 
     @Column({type: "text"})
-    description: string;
+    description: String;
 
     @Column()
     lesson_price: number;
@@ -19,7 +19,7 @@ export class Course{
     thumbnail_picture: Buffer
 
     @Column({type: "bytea"})
-    gallery_picture: Buffer
+    galery_pictures: Buffer
 
 }
 

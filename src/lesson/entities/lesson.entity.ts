@@ -17,8 +17,8 @@ export class Lesson {
     @Column({type: "timestamptz"})
     scheduled: Date;
 
-    @Column()
-    galery_pictures: File;
+    @Column({type: "bytea"})
+    gallery_pictures: Buffer;
 
     @Column()
     previous_id: Number;

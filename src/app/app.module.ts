@@ -5,6 +5,9 @@ import { PersonModule } from '../person/person.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
+import { LessonModule } from 'src/lesson/lesson.module';
+import { CourseModule } from 'src/course/course.module';
+import { CategoryModule } from 'src/category/category.module';
 
 @Module({
   imports: [
@@ -21,7 +24,12 @@ import { join } from 'path';
         name: configService.get('DB_NAME'),
         entities: [join(process.cwd(), 'dist/**/*.entity.js')]
       })}
-    )],
+    ),
+    PersonModule,
+    LessonModule,
+    CourseModule,
+    CategoryModule
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

@@ -19,7 +19,7 @@ export class CourseService {
           description: createCourseDto.description,
           thumbnail: createCourseDto.thumbnail_picture,
           price: createCourseDto.lesson_price,
-          gallery: createCourseDto.gallery_pictures,
+          gallery: createCourseDto.galery_pictures,
         };
   const newCourse = this.courseRepository.create(courseData);
         await this.courseRepository.save(newCourse);

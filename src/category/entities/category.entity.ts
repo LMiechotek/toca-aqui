@@ -8,11 +8,11 @@ import { Column, Entity, PrimaryColumn } from "typeorm";
     id: number
 
     @Column()
-    name: String
+    name: string
 
     @Column({type: "text"})
     description: string
 
-    @Column()
-    logo_picture: File
+   @Column({ type: 'bytea', nullable: true }) 
+   logo_picture: Buffer;
  }

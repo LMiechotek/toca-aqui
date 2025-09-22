@@ -1,6 +1,10 @@
 import { IsEmail, IsNotEmpty, IsString, MaxLength, MinLength } from "class-validator";
+import { PrimaryColumn } from "typeorm";
 
 export class CreatePersonDto {
+    @PrimaryColumn()
+    id: number
+    
     @IsString()
     @IsNotEmpty()
     @MinLength(3)
@@ -19,5 +23,8 @@ export class CreatePersonDto {
     @MaxLength(11)
     cpf: string;
 
+    @IsString()
+    profile_picture: Buffer;
+    
     
 }

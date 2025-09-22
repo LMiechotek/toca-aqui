@@ -12,8 +12,8 @@ export class Authority {
 
     @Column()
     person_id : number;
-    //@ManyToOne(() => Person, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
-    //@JoinColumn({})
+    @ManyToOne(() => Person, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
+    @JoinColumn({})
 
     @Column({ type: "timestamp with time zone", default: () => "now()" })
     valid_from: Date;

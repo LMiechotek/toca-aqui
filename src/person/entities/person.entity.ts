@@ -6,21 +6,21 @@ export class Person {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({ type: "varying character", nullable: false })
+    @Column({nullable: false })
     name: string;
 
-    @Column({ type: "varying character", nullable: false, unique: true })
+    @Column({nullable: false, unique: true })
     @IsEmail()
     email: string;
 
-    @Column({ type: "varying character", length: 13})
+    @Column({length: 13})
     mobile_number: string;
 
-    @Column({ type: "varying character", length:11})
+    @Column({length:11})
     cpf: string;
 
-    @Column()
-    profile_picture:string;
+    @Column({type: "bytea"})
+    profile_picture:Buffer;
 
     @Column()
     previous_id: number;

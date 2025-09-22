@@ -24,8 +24,8 @@ export class LessonController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: number, @Body() updatePersonDto: UpdateLessonDto) {
-    return this.lessonService.update(+id, updatePersonDto);
+  update(@Param('id') id: number, @Body() updateLessonDto: UpdateLessonDto) {
+    return this.lessonService.update(+id, updateLessonDto);
   }
 
   @Delete(':id')

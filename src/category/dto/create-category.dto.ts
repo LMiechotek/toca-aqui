@@ -7,9 +7,9 @@ export class createCategoryDto{
     name: string
 
     @IsString()
-    description: Text
+    description: string
 
     @IsString()
-    logo_picture: File
+    logo_picture: Buffer
 
 }

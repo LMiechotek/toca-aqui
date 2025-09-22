@@ -22,6 +22,16 @@ export class PersonController {
     return this.personService.findOne(+id);
   }
 
+  @Get('teacher')
+  findAllTeachers(){
+    return this.personService.findAllTeachers();
+  }
+
+  @Get('teacher/:id')
+  findOneTeacher(@Param('id') id: string){
+    return this.personService.findOneTeacher(+id)
+  }
+
   @Patch(':id')
   update(@Param('id') id: string, @Body() updatePersonDto: UpdatePersonDto) {
     return this.personService.update(+id, updatePersonDto);

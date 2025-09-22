@@ -47,21 +47,28 @@ export class PersonService {
   }
 
   async findAllTeachers(){
-   
-    const professors = await this.personRepository.createQueryBuilder('Person')
-    .innerJoin(Authority, 'authority', 'person.id = authority.person_id')
-    .where(`authority.permission = ${Permission.TEACHER}`)
-    .getMany() 
+    const query = `Select * from Authority INNER JOIN person p ON p.id = authority.person_id WHERE authority.person_id = p.id and authority."permission" = 'teacher'`
 
+    const professors = await this.personRepository.query(query)
+    //.innerJoin(Authority, 'authority', 'person.id = authority.person_id')
+    //.where(`authority.permission = ${Permission.TEACHER}`)
+    //.getMany() 
+    
     return professors
   }
 
-  async findOneProfessor(id: number) : Promise<Person | null> {
-    const professor = await this.personRepository.createQueryBuilder('Person')
-    .innerJoin(Authority, 'authority', 'person.id = authority.person_id')
-    .where(`authority.permission = ${Permission.TEACHER}`)
-    .andWhere(`person.id = ${id}`)
-    .getOne()
+  async findOneTeacher(id: number) : Promise<Person | null> {
+
+    console.log(id)
+    console.log(typeof id)
+    
+    const query = `Select id from Person inner join authority on authority.permission = TEACHER`
+
+    const professor = await this.personRepository.query(query)
+    //.innerJoin(Authority, 'authority', 'person.id = authority.person_id')
+    //.where(`authority.permission = ${Permission.TEACHER}`)
+    //.andWhere(`person.id = id`, {id})
+    //.getOne()
 
     return professor
   }
@@ -71,10 +78,12 @@ export class PersonService {
     const person = await this.personRepository.findOneBy({
       id,
     });
-
+    
     if(!person) {
       throw new NotFoundException('Person not found.');
     }
+
+
 
     return person;
   }

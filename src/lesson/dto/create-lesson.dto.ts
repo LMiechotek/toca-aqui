@@ -16,7 +16,7 @@ export class CreateLessonDto {
     scheduled: Date;
 
     @IsString()
-    galleyPictures: File;
+    galleyPictures: Buffer;
 
     @IsNumber()
     previous_id: Number;
