@@ -1,17 +1,15 @@
-import { Person } from "src/person/entities/person.entity";
-import { Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
+import { Person } from '../../person/entities/person.entity';
 
-@Entity()
+@Entity('authority')
 export class Authority {
-    @PrimaryGeneratedColumn()
-    id: bigint;
+  @PrimaryGeneratedColumn('increment', { type: 'bigint' })
+  id: number;
 
-    //@ManyToOne(() => Person, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
-    //@JoinColumn({})
+  @Column({ type: 'varchar' })
+  permission: string; // admin | teacher
 
-    @Column({ type: "timestamp with time zone", default: () => "now()" })
-    valid_from: Date;
-
-    @Column({ type: "timestamp with time zone" })
-    valid_to: Date;
+  @ManyToOne(() => Person, (person) => person.authorities)
+  @JoinColumn({ name: 'person_id' })
+  person: Person;
 }

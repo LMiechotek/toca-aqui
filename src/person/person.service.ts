@@ -1,75 +1,43 @@
-import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
-import { CreatePersonDto } from './dto/create-person.dto';
-import { UpdatePersonDto } from './dto/update-person.dto';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Person } from './entities/person.entity';
 import { Repository } from 'typeorm';
+import { Person } from './entities/person.entity';
 
 @Injectable()
 export class PersonService {
   constructor(
     @InjectRepository(Person)
-    private readonly personRepository: Repository<Person>,
-  ) { }
+    private readonly personRepo: Repository<Person>,
+  ) {}
 
-  async create(createPersonDto: CreatePersonDto) {
-    try {
-      const personData = {
-        name: createPersonDto.name,
-        email: createPersonDto.email,
-        mobile_number: createPersonDto.mobile_number,
-        cpf: createPersonDto.cpf,
-      };
-
-      const newPerson = this.personRepository.create(personData);
-      await this.personRepository.save(newPerson);
-      return newPerson;
-    } catch (error) {
-      if (error === '23505') {
-        throw new ConflictException('Email is already in use.');
-      }
-
-      throw error;
-    }
+  create(data: Partial<Person>) {
+    const person = this.personRepo.create(data);
+    return this.personRepo.save(person);
   }
 
-  async findAll() {
-    const persons = await this.personRepository.find({
-      order: {
-        id: 'desc',
-      },
+  findAll() {
+    return this.personRepo.find({ relations: ['credential', 'sessions', 'authorities'] });
+  }
+
+  findOne(id: number) {
+    return this.personRepo.findOne({
+      where: { id },
+      relations: ['credential', 'sessions', 'authorities'],
     });
-
-    return persons
   }
 
-  async findOne(id: bigint) {
-    const person = await this.personRepository.findOneBy({
-      id,
+  update(id: number, data: Partial<Person>) {
+    return this.personRepo.update(id, data);
+  }
+
+  remove(id: number) {
+    return this.personRepo.delete(id);
+  }
+
+  async findByEmail(email: string) {
+    return this.personRepo.findOne({
+      where: { email },
+      relations: ['credential', 'authorities'],
     });
-
-    if(!person) {
-      throw new NotFoundException('Person not found.');
-    }
-
-    return person;
-  }
-
-  async update(id: bigint, updatePersonDto: UpdatePersonDto) {
-    const personData = {
-
-    }
-  }
-
-  async remove(id: bigint) {
-    const person = await this.personRepository.findOneBy({
-      id,
-    });
-
-    if (!person) {
-      throw new NotFoundException('Person not found.');
-    }
-
-    return this.personRepository.remove(person);
   }
 }
