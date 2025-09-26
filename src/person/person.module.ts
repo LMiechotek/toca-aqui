@@ -5,9 +5,9 @@ import { PersonService } from './person.service';
 import { PersonController } from './person.controller';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Person])], // 👈 registra o repository da entidade
+  imports: [TypeOrmModule.forFeature([Person])], 
   providers: [PersonService],
   controllers: [PersonController],
-  exports: [TypeOrmModule, PersonService], // 👈 exporta se for usar em outros módulos
+  exports: [TypeOrmModule, PersonService], 
 })
 export class PersonModule {}

@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToOne, OneToMany } from 'typeorm';
 import { Credential } from '../../credential/entities/credential.entity';
-import { UserSession } from '../../user-sesion/entities/user-session.entity';
 import { Authority } from '../../authority/entities/authority.entity';
+import { UserSession } from '../../user-session/entities/user-session.entity'; // 👈 importa aqui
 
 @Entity()
 export class Person {
@@ -14,12 +14,12 @@ export class Person {
   @Column({ unique: true })
   email: string;
 
-  @OneToOne(() => Credential, (cred) => cred.person, { cascade: true })
+  @OneToOne(() => Credential, (credential) => credential.person)
   credential: Credential;
 
-  @OneToMany(() => UserSession, (session) => session.person)
-  sessions: UserSession[];
-
-  @OneToMany(() => Authority, (auth) => auth.person)
+  @OneToMany(() => Authority, (authority) => authority.person)
   authorities: Authority[];
+
+  @OneToMany(() => UserSession, (session) => session.person, { cascade: true }) // 👈 adiciona isso
+  sessions: UserSession[];
 }

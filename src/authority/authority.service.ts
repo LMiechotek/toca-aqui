@@ -4,7 +4,7 @@ import * as bcrypt from 'bcrypt';
 import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto'; // <-- precisa criar este DTO
 import { PersonService } from '../person/person.service';
-import { UserSessionService } from '../user-sesion/user-session.service';
+import { UserSessionService } from '../user-session/user-session.service';
 import { Authority } from '../authority/entities/authority.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
